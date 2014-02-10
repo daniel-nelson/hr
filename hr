@@ -2,7 +2,7 @@
 
 # The MIT License (MIT)
 #
-# Copyright (c) 2013 Gil Gonçalves, 2014 Daniel Nelson
+# Copyright (c) 2013 Gil Gonçalves, 2014 Jared Scheel, Daniel Nelson
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of
 # this software and associated documentation files (the "Software"), to deal in
@@ -21,22 +21,45 @@
 # IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 # CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+if [[ -n $1 ]]; then
+    title=$@
+else
+    title=''
+fi
+
+line=''
+
 cols=$(tput cols)
 
+if [[ $title = '' ]]; then
+    for (( i=0; i<cols; i++ ))
+    do
+        line+="□"
+    done
+else
+    chars=$((cols-${#title}-2))
+    chars_half=$((chars/2))
+    for (( i=0; i<chars_half; i++ ))
+    do
+        line+="□"
+    done
+    line+=" ${title} "
+    remaining_chars=chars-chars_half
+    for (( i=0; i<remaining_chars; i++ ))
+    do
+        line+="□"
+    done
+fi
+
+
 underline=''
-for (( i=1; i<cols; i++ ))
+for (( i=1; i<=cols; i++ ))
 do
     underline+="_"
 done
 
-line=''
-for (( i=1; i<cols; i++ ))
-do
-    line+="□"
-done
-
 overline=''
-for (( i=1; i<cols; i++ ))
+for (( i=1; i<=cols; i++ ))
 do
     overline+="‾"
 done
@@ -47,3 +70,4 @@ echo -n "${line}"
 echo ""
 echo -n "${overline}"
 echo ""
+
