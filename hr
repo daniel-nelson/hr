@@ -32,7 +32,7 @@ done
 line=''
 for (( i=1; i<cols; i++ ))
 do
-    line+="${space_character}"
+    line+="□"
 done
 
 overline=''
